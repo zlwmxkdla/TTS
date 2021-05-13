@@ -13,6 +13,7 @@ hyperparameter. Some cleaners are English-specific. You'll typically want to use
 import re
 
 from unidecode import unidecode
+from unicodedata import normalize
 
 from TTS.tts.utils.chinese_mandarin.numbers import replace_numbers_to_characters_in_text
 
@@ -55,6 +56,10 @@ def remove_aux_symbols(text):
     return text
 
 
+def nfd(text):
+    return normalize('NFD', text)
+
+
 def replace_symbols(text, lang="en"):
     text = text.replace(";", ",")
     text = text.replace("-", " ")
@@ -65,6 +70,8 @@ def replace_symbols(text, lang="en"):
         text = text.replace("&", " et ")
     elif lang == "pt":
         text = text.replace("&", " e ")
+    elif lang == "kr":
+        text = text.replace("&", " 앤 ")
     return text
 
 
@@ -135,6 +142,15 @@ def portuguese_cleaners(text):
 def chinese_mandarin_cleaners(text: str) -> str:
     """Basic pipeline for chinese"""
     text = replace_numbers_to_characters_in_text(text)
+    return text
+
+
+def korean_cleaners(text):
+    text = lowercase(text)
+    text = replace_symbols(text, lang="kr")
+    text = remove_aux_symbols(text)
+    text = collapse_whitespace(text)
+    text = nfd(text)
     return text
 
 
