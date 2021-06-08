@@ -117,6 +117,7 @@ def save_best_model(
             for model_name in model_names:
                 if os.path.basename(model_name) == best_model_name:
                     continue
+                open(model_name, 'w').close()
                 os.remove(model_name)
         # create symlink to best model for convinience
         link_name = "best_model.pth.tar"
