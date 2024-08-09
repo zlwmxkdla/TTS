@@ -97,7 +97,7 @@ setup(
         "notebooks": requirements_notebooks,
         "tf": requirements_tf,
     },
-    python_requires='>=3.6.0, <3.9',
+    python_requires='>=3.6, <3.13',
     entry_points={
         'console_scripts': [
             'tts=TTS.bin.synthesize:main',
